@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    position: relative; /* Ensure the body has a relative position for overlay */
+}
+
+.container {
+    width: 50%;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    position: relative; /* Ensure the container has a relative position */
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+    color: #555;
+    display: inline-block; /* Make labels inline-block */
+    white-space: nowrap;  /* Prevent label text from wrapping */
+}
+
+.input-field, 
+select.input-field {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    width: 100px; /* Reduce width for input fields and select boxes */
+}
+
+select.input-field {
+    height: auto; /* Remove any fixed height */
+    line-height: 1.5; /* Increase line-height for better display */
+    padding: 10px; /* Adjust padding if needed */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+button {
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#resultsContainer {
+    display: none; /* Initially hidden */
+    position: absolute; /* Absolute positioning for overlay */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    overflow-y: auto; /* Add scroll if needed */
+    z-index: 1000; /* Ensure it's on top of other content */
+    display: flex;
+    flex-direction: column;
+}
+
+#resultsContainer h3 {
+    color: #fff;
+}
+
+#resultsContainer p {
+    margin: 5px 0;
+}
+
+.close-btn {
+    align-self: flex-end;
+    background: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: #e60000;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    .inline-fields {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
