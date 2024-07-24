@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+<div class="container">
+    <h2>Import Cost Calculator</h2>
+    <form id="costCalculatorForm">
+        <label for="exchangeRate">Rate of Exchange:</label>
+        <input type="number" id="exchangeRate" class="input-field" required>
+        <br>
+        <label for="dutyPercentage">Duty Percentage%:</label>
+        <input type="number" id="dutyPercentage" class="input-field">
+        <br>
+        <label for="unitPrice">Unit Price USD:</label>
+        <input type="number" id="unitPrice" class="input-field" required>
+        <br>  
+
+        <div class="inline-fields">
+            <label for="containerLoad">Container Load Quantity:</label>
+            <input type="number" id="containerLoad" class="input-field">
+            <b>OR</b>
+            <label for="invoiceTotal">Invoice Total</label>
+            <input type="number" id="invoiceTotal" class="input-field">
+        </div>
+        <br> 
+        <label for="cargoWeight">Gross Cargo Weight (kg)</label>
+        <input type="number" id="cargoWeight" required>
+        <br>
+        <label for="portOfLoad">Port of Load</label>
+        <select name="portOfLoad" id="portOfLoad"> 
+            <option value="">--Select Port--</option>
+            <option value="Shekou">Shekou-China</option>
+            <option value="Xingang">Xingang-China</option>
+            <option value="Qindao">Qindao-China</option>
+            <option value="Paranagua">Paranagua-Brazil</option>
+        </select>
+        <br>
+
+        <button type="button" onclick="calculateCost()">Calculate Cost</button>
+    </form>
+</div>
+
+<div id="resultsContainer" style="display:none; border:1px solid #ccc; padding:10px; margin-top:20px;">
+    <button class="close-btn" onclick="closeResults()">X</button>
+    <h3 id="landedCostResult"></h3>
+    <h3>Cost Breakdown</h3>
+    <p id="oceanFreightResult"></p>
+    <p id="customsDutyResult"></p>
+    <p id="customsVatResult"></p>
+    <p id="cargoDuesResult"></p>
+    <p id="shippingLineChargesResult"></p>
+    <p id="haulageTotalResult"></p>
+    <p id="clearingChargesResult"></p>
+    <p id="factorResult"></p>
+</div>
+
+</body>
+<script src="app2.js"></script>
+</html>
