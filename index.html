@@ -23,23 +23,28 @@
         <div class="inline-fields">
             <label for="containerLoad">Container Load Quantity:</label>
             <input type="number" id="containerLoad" class="input-field">
-            <b>OR</b>
+            <b id="orText">OR</b>
             <label for="invoiceTotal">Invoice Total</label>
             <input type="number" id="invoiceTotal" class="input-field">
         </div>
         <br> 
         <label for="cargoWeight">Gross Cargo Weight (kg)</label>
-        <input type="number" id="cargoWeight" required>
+        <input type="number" id="cargoWeight" class="input-field" required> <!-- Applied class="input-field" -->
         <br>
         <label for="portOfLoad">Port of Load</label>
-        <select name="portOfLoad" id="portOfLoad"> 
+        <select name="portOfLoad" id="portOfLoad" onchange="handlePortChange()" class="input-field-two"> <!-- Applied class="input-field" -->
             <option value="">--Select Port--</option>
             <option value="Shekou">Shekou-China</option>
             <option value="Xingang">Xingang-China</option>
             <option value="Qindao">Qindao-China</option>
             <option value="Paranagua">Paranagua-Brazil</option>
+            <option value="Custom">Custom</option>
         </select>
         <br>
+        <div id="customPortContainer" style="display: none;">
+            <label for="customPortAmount">Custom Freight Rate:</label>
+            <input type="number" id="customPortAmount" class="input-field">
+        </div>
 
         <button type="button" onclick="calculateCost()">Calculate Cost</button>
     </form>
@@ -48,6 +53,7 @@
 <div id="resultsContainer" style="display:none; border:1px solid #ccc; padding:10px; margin-top:20px;">
     <button class="close-btn" onclick="closeResults()">X</button>
     <h3 id="landedCostResult"></h3>
+    <h3 id="factorResult"></h3>
     <h3>Cost Breakdown</h3>
     <p id="oceanFreightResult"></p>
     <p id="customsDutyResult"></p>
@@ -56,7 +62,7 @@
     <p id="shippingLineChargesResult"></p>
     <p id="haulageTotalResult"></p>
     <p id="clearingChargesResult"></p>
-    <p id="factorResult"></p>
+    
 </div>
 
 </body>
