@@ -5,11 +5,11 @@ function getPortValue() {
     // Switch statement used below to get ocean freight value, it is an alternative to if-else
     switch (selectedPort) {
         case 'Shekou':
-            return 8000;
+            return 6500;
         case 'Xingang':
-            return 10000;
+            return 6600;
         case 'Qindao':
-            return 10000;
+            return 6650;
         case 'Paranagua':
             return 2150;
         default:
