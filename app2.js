@@ -1,8 +1,24 @@
+// Function to handle port change and display custom port input
+function handlePortChange() {
+    const portSelect = document.getElementById("portOfLoad");
+    const customPortContainer = document.getElementById("customPortContainer");
+    const customPortAmount = document.getElementById("customPortAmount");
+
+    if (portSelect.value === "Custom") {
+        customPortContainer.style.display = "block";
+    } else {
+        customPortContainer.style.display = "none";
+        customPortAmount.value = ""; // Clear the custom amount when not in use
+    }
+}
+
 // Function to get ocean freight rate based on user selection
 function getPortValue() {
     const portSelect = document.getElementById("portOfLoad");
     const selectedPort = portSelect.value;
-    // Switch statement used below to get ocean freight value, it is an alternative to if-else
+    const customPortAmount = parseFloat(document.getElementById("customPortAmount").value);
+
+    // Switch statement used below to get ocean freight value
     switch (selectedPort) {
         case 'Shekou':
             return 6500;
@@ -12,6 +28,8 @@ function getPortValue() {
             return 6650;
         case 'Paranagua':
             return 2150;
+        case 'Custom':
+            return isNaN(customPortAmount) ? 0 : customPortAmount; // Return 0 if input is not a number
         default:
             return 0;
     }
