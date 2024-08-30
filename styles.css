@@ -1,24 +1,27 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Windows-like font */
+    background-color: #f0f0f0; /* Light grey background */
     margin: 0;
     padding: 0;
-    position: relative; /* Ensure the body has a relative position for overlay */
 }
 
 .container {
     width: 50%;
     margin: 50px auto;
-    background-color: #fff;
+    background-color: #ffffff; /* White background for the container */
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    position: relative; /* Ensure the container has a relative position */
+    box-shadow: 0 0 8px rgba(0,0,0,0.2); /* Subtle shadow */
+    border-radius: 4px; /* Rounded corners */
+    border: 1px solid #ccc; /* Border similar to Windows app windows */
+    position: relative;
 }
 
 h2 {
     text-align: center;
     color: #333;
+    border-bottom: 2px solid #0078D4; /* Windows blue border */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 form {
@@ -28,64 +31,75 @@ form {
 
 label {
     margin: 10px 0 5px;
-    color: #555;
-    display: inline-block; /* Make labels inline-block */
-    white-space: nowrap;  /* Prevent label text from wrapping */
+    color: #333; /* Darker text for better visibility */
+    display: inline-block;
+    font-size: 14px;
 }
 
 .input-field, 
 select.input-field {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #0078D4; /* Windows-like blue border */
     border-radius: 4px;
     margin-bottom: 10px;
-    font-size: 16px;
-    width: 100px; /* Reduce width for input fields and select boxes */
+    font-size: 14px;
+    width: 90px; /* Adjusted width for better appearance */
+}
+
+input-field, 
+select.input-field-two {
+    padding: 10px;
+    border: 1px solid #0078D4; /* Windows-like blue border */
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    width: 160px; /* Adjusted width for better appearance */
 }
 
 select.input-field {
-    height: auto; /* Remove any fixed height */
-    line-height: 1.5; /* Increase line-height for better display */
-    padding: 10px; /* Adjust padding if needed */
-    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    height: auto;
+    line-height: 1.5;
+    box-sizing: border-box;
 }
 
 button {
     padding: 10px;
-    background-color: #007BFF;
-    color: #fff;
+    background-color: #0078D4; /* Windows-like blue background */
+    color: #ffffff;
     border: none;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #005a9e; /* Darker blue on hover */
 }
 
 #resultsContainer {
-    display: none; /* Initially hidden */
-    position: absolute; /* Absolute positioning for overlay */
+    display: none;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    color: #fff;
-    border: 1px solid #ddd;
+    background-color: rgba(0, 0, 0, 0.8); /* Dark overlay with transparency */
+    color: #ffffff;
+    border: 1px solid #0078D4; /* Windows-like blue border */
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    overflow-y: auto; /* Add scroll if needed */
-    z-index: 1000; /* Ensure it's on top of other content */
+    border-radius: 4px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    overflow-y: auto;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
 }
 
 #resultsContainer h3 {
-    color: #fff;
+    color: #ffffff;
+    border-bottom: 1px solid #0078D4; /* Windows blue border */
+    padding-bottom: 10px;
 }
 
 #resultsContainer p {
@@ -94,18 +108,18 @@ button:hover {
 
 .close-btn {
     align-self: flex-end;
-    background: #ff4d4d;
-    color: #fff;
+    background: #d9534f; /* Windows red close button color */
+    color: #ffffff;
     border: none;
     border-radius: 4px;
     padding: 10px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     transition: background-color 0.3s ease;
 }
 
 .close-btn:hover {
-    background-color: #e60000;
+    background-color: #c9302c; /* Darker red on hover */
 }
 
 @media (max-width: 768px) {
@@ -117,4 +131,20 @@ button:hover {
         flex-direction: column;
         align-items: flex-start;
     }
+}
+
+#orText {
+    margin: 0 10px; /* Adjust the values as needed */
+}
+
+/* Hide arrows in Chrome, Safari, and newer versions of Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hide arrows in Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }
