@@ -47,7 +47,7 @@ function calculateAgencyFee(totalDisbursements) {
 
 // Function to calculate finance fee
 function calculateFinanceFee(totalDisbursements) {
-    const primeRate = 0.1175;
+    const primeRate = 0.1150;
     const daysInAYear = 365;
     const financed = 45;
     return ((totalDisbursements * financed) / daysInAYear) * primeRate;
