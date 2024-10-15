@@ -21,11 +21,11 @@ function getPortValue() {
     // Switch statement used below to get ocean freight value
     switch (selectedPort) {
         case 'Shekou':
-            return 6600;
+            return 5500;
         case 'Xingang':
-            return 6800;
+            return 6000;
         case 'Qindao':
-            return 6750;
+            return 6000;
         case 'Paranagua':
             return 2150;
         case 'Custom':
@@ -126,7 +126,7 @@ function calculateCost() {
     let haulage;
     const containerWeight = 4100;
     const totalCargoWeight = cargoWeight + containerWeight;
-    const fuelSurcharge = 0.12;
+    const fuelSurcharge = 0.08;
     if (totalCargoWeight < 24000) {
         haulage = 17496;
     } else {
