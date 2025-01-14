@@ -21,13 +21,13 @@ function getPortValue() {
     // Switch statement used below to get ocean freight value
     switch (selectedPort) {
         case 'Shekou':
-            return 5500;
+            return 4300;
         case 'Xingang':
-            return 6000;
+            return 4500;
         case 'Qindao':
-            return 6000;
+            return 4800;
         case 'Paranagua':
-            return 2150;
+            return 2050;
         case 'Custom':
             return isNaN(customPortAmount) ? 0 : customPortAmount; // Return 0 if input is not a number
         default:
@@ -47,7 +47,7 @@ function calculateAgencyFee(totalDisbursements) {
 
 // Function to calculate finance fee
 function calculateFinanceFee(totalDisbursements) {
-    const primeRate = 0.1150;
+    const primeRate = 0.1125;
     const daysInAYear = 365;
     const financed = 45;
     return ((totalDisbursements * financed) / daysInAYear) * primeRate;
