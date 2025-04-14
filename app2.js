@@ -23,11 +23,11 @@ function getPortValue() {
         case 'Shekou':
             return 2200;
         case 'Xingang':
-            return 2400;
+            return 2300;
         case 'Qindao':
             return 2200;
         case 'Paranagua':
-            return 2050;
+            return 1895;
         case 'Custom':
             return isNaN(customPortAmount) ? 0 : customPortAmount; // Return 0 if input is not a number
         default:
