@@ -21,13 +21,13 @@ function getPortValue() {
     // Switch statement used below to get ocean freight value
     switch (selectedPort) {
         case 'Shekou':
-            return 2200;
+            return 2100;
         case 'Xingang':
-            return 2300;
+            return 2200;
         case 'Qindao':
             return 2200;
         case 'Paranagua':
-            return 1895;
+            return 1700;
         case 'Custom':
             return isNaN(customPortAmount) ? 0 : customPortAmount; // Return 0 if input is not a number
         default:
@@ -114,7 +114,7 @@ function calculateCost() {
     console.log("Customs VAT: ", customsVat);
 
     // Define fixed charges
-    const cargoDues = 3635.80;
+    const cargoDues = 3759.42
     const terminalHandling = 3671;
     const carrierReleaseFees = 3035;
     const shippingLineCharges = terminalHandling + carrierReleaseFees;
@@ -126,13 +126,13 @@ function calculateCost() {
     let haulage;
     const containerWeight = 4100;
     const totalCargoWeight = cargoWeight + containerWeight;
-    const fuelSurcharge = 0.13;
+    const fuelSurcharge = 0.10;
     if (totalCargoWeight < 24000) {
-        haulage = 17496;
+        haulage = 15980;
     } else {
-        haulage = 18900;
+        haulage = 17800;
     }
-    const turnIn = 6800;
+    const turnIn = 7000;
     const fuelSurchargeAmount = haulage * fuelSurcharge;
     const haulageTotal = haulage + turnIn + fuelSurchargeAmount;
 
