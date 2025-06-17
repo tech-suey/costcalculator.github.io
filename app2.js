@@ -21,9 +21,9 @@ function getPortValue() {
     // Switch statement used below to get ocean freight value
     switch (selectedPort) {
         case 'Shekou':
-            return 2100;
-        case 'Xingang':
             return 2200;
+        case 'Xingang':
+            return 2300;
         case 'Qindao':
             return 2200;
         case 'Paranagua':
@@ -47,7 +47,7 @@ function calculateAgencyFee(totalDisbursements) {
 
 // Function to calculate finance fee
 function calculateFinanceFee(totalDisbursements) {
-    const primeRate = 0.1100;
+    const primeRate = 0.1075;
     const daysInAYear = 365;
     const financed = 45;
     return ((totalDisbursements * financed) / daysInAYear) * primeRate;
@@ -126,7 +126,7 @@ function calculateCost() {
     let haulage;
     const containerWeight = 4100;
     const totalCargoWeight = cargoWeight + containerWeight;
-    const fuelSurcharge = 0.10;
+    const fuelSurcharge = 0.08;
     if (totalCargoWeight < 24000) {
         haulage = 15980;
     } else {
