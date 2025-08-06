@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script>
+    const supabaseUrl = "https://udochzoabopsxichgqdh.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkb2Noem9hYm9wc3hpY2hncWRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3OTc2NzIsImV4cCI6MjA2OTM3MzY3Mn0.3acpGH-eUGHjMp3JBa-XHa_xECj3bcSzp8d0i99JjyA";
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -9,6 +15,11 @@
 <body>
 <div class="container">
     <h2>Import Cost Calculator</h2>
+    <div class="settings-container">
+        <a href="config.html" class="settings-icon">
+        ⚙️ <!-- This is the gear icon symbol -->
+        </a>
+    </div>
     <form id="costCalculatorForm">
         <label for="exchangeRate">Rate of Exchange:</label>
         <input type="number" id="exchangeRate" class="input-field" required>
@@ -62,9 +73,11 @@
     <p id="shippingLineChargesResult"></p>
     <p id="haulageTotalResult"></p>
     <p id="clearingChargesResult"></p>
+    <p id="insuranceResult"></p>
     
 </div>
 
+<script src="app.js"></script>
 </body>
-<script src="app2.js"></script>
+
 </html>
