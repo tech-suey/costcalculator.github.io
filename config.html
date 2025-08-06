@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Config</title>
+    <!-- Load Supabase FIRST -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Freight Charges Setup</h1>
+    
+    <!-- Password protection overlay -->
+    <div id="passwordOverlay">
+        <div id="passwordForm">
+            <h3>Enter Password</h3>
+            <p>To save changes, please enter the admin password:</p>
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <div id="passwordError">Incorrect password. Please try again.</div>
+            <div>
+                <button onclick="verifyPassword()">Submit</button>
+                <button onclick="cancelPassword()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ocean freight table -->
+    <table border="1">
+        <tr>
+            <td colspan="2" align="center"> <b> Ocean Freight </b> </td>
+        </tr>
+        <tr>
+            <td align="center"> <strong>Port</strong></td>
+            <td align="center"> <strong>Amount</strong> </td>
+        </tr>
+        <tr>
+            <td>Shekou</td>
+            <td> <input type="number" id="shekou-input"> </td>
+        </tr>
+        <tr>
+            <td>Xingang</td>
+            <td> <input type="number" id="xingang-input"> </td>
+        </tr>
+        <tr>
+            <td>Qindao</td>
+            <td> <input type="number" id="qindao-input"> </td>
+        </tr>
+        <tr>
+            <td>Paranagua</td>
+            <td> <input type="number" id="paranagua-input"> </td>
+        </tr>
+    </table>
+    <br>
+
+    <!-- Other Charges -->
+    <table border="1">
+        <tr>
+            <td colspan="2" align="center"> <strong>Other Charges</strong> </td>
+        </tr>
+        <tr>
+            <td align="center"> <strong>Charge</strong> </td>
+            <td align="center"> <strong>Amount</strong> </td>
+        </tr>
+        <tr>
+            <td>Prime Rate</td>
+            <td> <input type="number" id="prime-input"> </td>
+        </tr>
+        <tr>
+            <td>Documentation</td>
+            <td> <input type="number" id="documentation-input"> </td>
+        </tr>
+        <tr>
+            <td>Cargo Dues</td>
+            <td> <input type="number" id="cargodues-input"> </td>
+        </tr>
+        <tr>
+            <td>Terminal Handling</td>
+            <td> <input type="number" id="terminal-handling-input"> </td>
+        </tr>
+        <tr>
+            <td>Carrier Charges</td>
+            <td> <input type="number" id="carrier-input"> </td>
+        </tr>
+    </table>
+    <br>
+
+    <!-- Haulage Charges -->
+    <table border="1">
+        <tr>
+            <td colspan="2" align="center"> <strong>Haulage Charges</strong> </td>
+        </tr>
+        <tr>
+            <td align="center"> <strong>Charge</strong> </td>
+            <td align="center"> <strong>Amount</strong> </td>
+        </tr>
+        <tr>
+            <td>Haulage 0-24 Tons </td>
+            <td> <input type="number" id="haulage-light-input"> </td>
+        </tr>
+        <tr>
+            <td>Haulage 24-30 Tons</td>
+            <td> <input type="number" id="haulage-heavy-input"> </td>
+        </tr>
+        <tr>
+            <td>MT Turn-In</td>
+            <td> <input type="number" id="haulage-empty-input"> </td>
+        </tr>
+        <tr>
+            <td>Fuel Surcharge</td>
+            <td> <input type="number" id="haulage-fuel-input"> </td>
+        </tr>
+    </table>
+    <br>
+
+    <button onclick="showPasswordPrompt()">Save Changes</button>
+
+    <script>
+    let supabaseClient;
+    const ADMIN_PASSWORD = "admin123"; // Set your password here
+
+    // Password functions
+    function showPasswordPrompt() {
+        document.getElementById('passwordOverlay').style.display = 'flex';
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordError').style.display = 'none';
+    }
+    
+    function verifyPassword() {
+        const password = document.getElementById('passwordInput').value;
+        if (password === ADMIN_PASSWORD) {
+            document.getElementById('passwordOverlay').style.display = 'none';
+            saveOceanFreight(); // Proceed with saving
+        } else {
+            document.getElementById('passwordError').style.display = 'block';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
+        }
+    }
+    
+    function cancelPassword() {
+        document.getElementById('passwordOverlay').style.display = 'none';
+    }
+
+    // Wait for Supabase to load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize client
+        supabaseClient = window.supabase.createClient(
+            "https://udochzoabopsxichgqdh.supabase.co",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkb2Noem9hYm9wc3hpY2hncWRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3OTc2NzIsImV4cCI6MjA2OTM3MzY3Mn0.3acpGH-eUGHjMp3JBa-XHa_xECj3bcSzp8d0i99JjyA"
+        );
+
+        // Load all data when page loads
+        loadAllData();
+    });
+
+    // Function to load all data from database
+    async function loadAllData() {
+        try {
+            // Load ocean freight data
+            await loadOceanFreight();
+            
+            // Load freight charges data
+            await loadFreightCharges();
+            
+            // Load haulage charges data
+            await loadHaulageCharges();
+
+            console.log('All data loaded successfully');
+
+        } catch (error) {
+            console.error('Error loading data:', error);
+            alert('Error loading data: ' + error.message);
+        }
+    }
+
+    // Load ocean freight data
+    async function loadOceanFreight() {
+        const { data, error } = await supabaseClient
+            .from('ocean_freight')
+            .select('port_name, amount');
+
+        if (error) throw error;
+
+        // Map port names to input IDs
+        const portMapping = {
+            'Shekou': 'shekou-input',
+            'Xingang': 'xingang-input', 
+            'Qindao': 'qindao-input',
+            'Paranagua': 'paranagua-input'
+        };
+
+        // Populate the inputs
+        data.forEach(row => {
+            const inputId = portMapping[row.port_name];
+            if (inputId) {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.value = row.amount;
+                }
+            }
+        });
+    }
+
+    // Load freight charges data
+    async function loadFreightCharges() {
+        const { data, error } = await supabaseClient
+            .from('freight_charges')
+            .select('charge_type, amount');
+
+        if (error) throw error;
+
+        // Map charge types to input IDs
+        const chargeMapping = {
+            'prime_rate': 'prime-input',
+            'documentation': 'documentation-input',
+            'cargo_dues': 'cargodues-input',
+            'terminal_handling': 'terminal-handling-input',
+            'carrier_charges': 'carrier-input'
+        };
+
+        // Populate the inputs
+        data.forEach(row => {
+            const inputId = chargeMapping[row.charge_type];
+            if (inputId) {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.value = row.amount;
+                }
+            }
+        });
+    }
+
+    // Load haulage charges data
+    async function loadHaulageCharges() {
+        const { data, error } = await supabaseClient
+            .from('haulage_charges')
+            .select('charge_type, amount');
+
+        if (error) throw error;
+
+        // Map charge types to input IDs
+        const haulageMapping = {
+            'haulage_light': 'haulage-light-input',
+            'haulage_heavy': 'haulage-heavy-input',
+            'empty_return': 'haulage-empty-input',
+            'fuel_surcharge': 'haulage-fuel-input'
+        };
+
+        // Populate the inputs
+        data.forEach(row => {
+            const inputId = haulageMapping[row.charge_type];
+            if (inputId) {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.value = row.amount;
+                }
+            }
+        });
+    }
+
+    // Save all changes to database
+    async function saveOceanFreight() {
+        try {
+            console.log('Starting save process...');
+            
+            // Save ocean freight data
+            await saveOceanFreightData();
+            
+            // Save freight charges data
+            await saveFreightChargesData();
+            
+            // Save haulage charges data
+            await saveHaulageChargesData();
+            
+            alert('All changes saved successfully!');
+            console.log('All data saved successfully');
+            
+        } catch (error) {
+            console.error('Error saving data:', error);
+            alert('Error saving data: ' + error.message);
+        }
+    }
+
+    // Save ocean freight data
+    async function saveOceanFreightData() {
+        const portMapping = {
+            'shekou-input': 'Shekou',
+            'xingang-input': 'Xingang',
+            'qindao-input': 'Qindao',
+            'paranagua-input': 'Paranagua'
+        };
+
+        for (const [inputId, portName] of Object.entries(portMapping)) {
+            const input = document.getElementById(inputId);
+            if (input && input.value) {
+                const amount = parseFloat(input.value);
+                
+                const { error } = await supabaseClient
+                    .from('ocean_freight')
+                    .upsert({ 
+                        port_name: portName, 
+                        amount: amount 
+                    }, { 
+                        onConflict: 'port_name' 
+                    });
+
+                if (error) throw error;
+            }
+        }
+    }
+
+    // Save freight charges data
+    async function saveFreightChargesData() {
+        const chargeMapping = {
+            'prime-input': 'prime_rate',
+            'documentation-input': 'documentation',
+            'cargodues-input': 'cargo_dues',
+            'terminal-handling-input': 'terminal_handling',
+            'carrier-input': 'carrier_charges'
+        };
+
+        for (const [inputId, chargeType] of Object.entries(chargeMapping)) {
+            const input = document.getElementById(inputId);
+            if (input && input.value) {
+                const amount = parseFloat(input.value);
+                
+                const { error } = await supabaseClient
+                    .from('freight_charges')
+                    .upsert({ 
+                        charge_type: chargeType, 
+                        amount: amount 
+                    }, { 
+                        onConflict: 'charge_type' 
+                    });
+
+                if (error) throw error;
+            }
+        }
+    }
+
+    // Save haulage charges data
+    async function saveHaulageChargesData() {
+        const haulageMapping = {
+            'haulage-light-input': 'haulage_light',
+            'haulage-heavy-input': 'haulage_heavy',
+            'haulage-empty-input': 'empty_return',
+            'haulage-fuel-input': 'fuel_surcharge'
+        };
+
+        for (const [inputId, chargeType] of Object.entries(haulageMapping)) {
+            const input = document.getElementById(inputId);
+            if (input && input.value) {
+                const amount = parseFloat(input.value);
+                
+                const { error } = await supabaseClient
+                    .from('haulage_charges')
+                    .upsert({ 
+                        charge_type: chargeType, 
+                        amount: amount 
+                    }, { 
+                        onConflict: 'charge_type' 
+                    });
+
+                if (error) throw error;
+            }
+        }
+    }
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
